@@ -5,19 +5,19 @@ from typing import Optional
 
 app = FastAPI(title="Hugging Face Callback API", version="1.0.0")
 
-@app.get("/")
+@app.get("/huggingface")
 async def root():
     """根路径，返回API信息"""
     return {
         "message": "Hugging Face Callback API",
         "version": "1.0.0",
         "endpoints": {
-            "callback": "/huggingface-callback",
+            "callback": "/huggingface/callback",
             "docs": "/docs"
         }
     }
 
-@app.get("/huggingface-callback")
+@app.get("/huggingface/callback")
 async def huggingface_callback(
     code: Optional[str] = Query(None, description="授权码"),
     state: Optional[str] = Query(None, description="状态参数"),
@@ -58,7 +58,7 @@ async def huggingface_callback(
         "next_steps": "可以使用此授权码换取访问令牌"
     }
 
-@app.get("/huggingface-callback/html", response_class=HTMLResponse)
+@app.get("/huggingface/callback/html", response_class=HTMLResponse)
 async def huggingface_callback_html(
     code: Optional[str] = Query(None),
     state: Optional[str] = Query(None),
